@@ -7,9 +7,9 @@ const { User } = require("../db");
 
 const signupBody = z.object({
   username: z.string().email(),
+  password: z.string(),
   firstName: z.string(),
   lastName: z.string(),
-  password: z.string(),
 });
 router.post("/signup", async (req, res) => {
   const { success } = signupBody.safeParse(req.body);
@@ -32,13 +32,13 @@ router.post("/signup", async (req, res) => {
   const user = await User.create({
     username: req.body.username,
     password: req.body.password,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
   });
 
   const id = user._id;
 
-  const token = jwt.sign(id, JWT_SECRET);
+  const token = jwt.sign({ id }, JWT_SECRET);
 
   res.json({
     message: "User created successfully",

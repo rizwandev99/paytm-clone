@@ -8,4 +8,10 @@ app.use(express.json());
 
 app.use("/api/v1", mainRouter);
 
-app.listen(3000);
+app.get("/", (req, res) => {
+  res.send("Hello from the homepage!");
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on PORT 3000");
+});
